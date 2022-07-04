@@ -6,9 +6,9 @@ import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoding from "./ChatLoding";
 import { getSender } from "../config/ChatLogics";
-
-export const MyChats = () => {
-  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+import GroupChatModal from "../miscellaneous/GroupChatModal";
+export const MyChats = ({ fetchAgain }) => {
+  const { user, SelectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
   const toast = useToast();
 
@@ -38,10 +38,10 @@ export const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
   return (
     <Box
-      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      display={{ base: SelectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
@@ -61,13 +61,15 @@ export const MyChats = () => {
         alignItems="center"
       >
         MyChats
-        <Button
-          d="flex"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            d="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
 
       <Box
@@ -86,8 +88,8 @@ export const MyChats = () => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                bg={SelectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                color={SelectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
                 borderRadius="lg"
