@@ -1,0 +1,89 @@
+.chatContainer {
+  height: 400px;
+  max-height: 400px;
+  width: 100%;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  background-color: #e8e8e8;
+}
+
+.chatContainer .messages {
+  flex: 90%;
+  width: 100%;
+  background-color: #e8e8e8;
+  border-radius: 7px;
+  overflow: auto;
+}
+
+.chatContainer .messageInputs {
+  flex: 10%;
+  width: 100%;
+  min-width: 100%;
+  background-color: aquamarine;
+  display: flex;
+}
+
+.messageInputs input {
+  flex: 90%;
+  height: calc(100% - 5px);
+  outline: none;
+  border-top: 5px solid aquamarine;
+  border-radius: 6px;
+  border: none;
+  margin: auto;
+}
+
+.messageInputs button {
+  flex: 10%;
+  outline: none;
+  border-top: 5px solid aquamarine;
+  border: none;
+  background-color: aquamarine;
+  font-weight: bold;
+}
+
+.messageContainer {
+  display: flex;
+}
+#You {
+  justify-content: flex-end;
+}
+
+#Other {
+  justify-content: flex-start;
+}
+
+#Other .messageIndividual {
+  background-color: #4FE3A3;
+  padding: 8px;
+  margin: 6px;
+  font-size: 16px;
+  max-width: 50%;
+  word-break: break-all;
+  border-radius: 6px;
+  display: flex;
+}
+
+#Other .profileImage{
+  margin-right: 0.5rem;
+}
+
+#You .profileImage{
+  margin-right: 0.5rem;
+}
+
+#You .messageIndividual {
+  background-color: #89A5E3  ;
+  padding: 8px;
+  margin: 6px;
+  font-size: 16px;
+  max-width: 50%;
+  word-break: break-all;
+  border-radius: 6px;
+  display: flex;
+}
+h4 {
+  margin: 0;
+  color: brown;
+}
