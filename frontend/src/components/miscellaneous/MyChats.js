@@ -2,15 +2,42 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
-import { Box, Button, Stack, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Stack, Text } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoding from "./ChatLoding";
 import { getSender } from "../config/ChatLogics";
 import GroupChatModal from "../miscellaneous/GroupChatModal";
+import io from "socket.io-client";
+const ENTPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
+
 export const MyChats = ({ fetchAgain }) => {
   const { user, SelectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
+  const initialState = [];
+  const [isOnline, setisOnline] = useState(initialState);
+  const [data, setdata] = useState([]);
+  const [socketConnected, setsocketConnected] = useState(false);
   const toast = useToast();
+
+  useEffect(() => {
+    socket = io(ENTPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setsocketConnected(true));
+  }, []);
+
+  useEffect(() => {
+    socket.emit("login", user);
+    socket.on("updateOnlineOrNot", (users) => {
+      // setisOnline.push(`${users[property]}`);
+      // console.log("uu" + `${users[property]}`);
+      // setisOnline(users);
+
+      setdata(users);
+      //console.log(setisOnline);
+      //console.log(SelectedChat._id);
+    });
+  }, [SelectedChat]);
 
   const fetchChats = async () => {
     try {
@@ -99,7 +126,40 @@ export const MyChats = ({ fetchAgain }) => {
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
+                  {console.log(chat)}
+                  {chat.isGroupChat ? (
+                    <></>
+                  ) : (
+                    <>
+                      {data.some((u) =>
+                        user._id === chat.users[0]._id
+                          ? u.userId === chat.users[1]._id
+                          : u.userId === chat.users[0]._id
+                      ) ? (
+                        <Badge
+                          colorScheme="green"
+                          marginLeft={2}
+                          fontSize={10}
+                          variant="subtle"
+                          marginBottom={1}
+                        >
+                          Online
+                        </Badge>
+                      ) : (
+                        <Badge
+                          colorScheme="red"
+                          marginLeft={2}
+                          fontSize={10}
+                          variant="subtle"
+                          marginBottom={1}
+                        >
+                          Offline
+                        </Badge>
+                      )}
+                    </>
+                  )}
                 </Text>
+
                 {chat.latestMessage && (
                   <Text fontSize="xs">
                     <b>{chat.latestMessage.sender.name} : </b>

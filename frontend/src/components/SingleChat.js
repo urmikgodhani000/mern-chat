@@ -33,6 +33,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setsocketConnected] = useState(false);
   const [isTyping, setisTyping] = useState(false);
   const [typing, settyping] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
   const toast = useToast();
 
   const defaultOptions = {

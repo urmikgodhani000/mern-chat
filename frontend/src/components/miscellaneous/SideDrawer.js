@@ -19,7 +19,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import Profile from "./Profile";
@@ -29,7 +29,9 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../miscellaneous/ChatLoding";
 import UserListItem from "../miscellaneous/UserAvatar/UserListItem";
-
+import io from "socket.io-client";
+const ENTPOINT = "http://localhost:5000";
+var socket;
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -106,8 +108,15 @@ const SideDrawer = () => {
     }
   };
 
+  useEffect(() => {
+    socket = io(ENTPOINT);
+    socket.emit("setup", user);
+    socket.on("connected");
+  }, []);
+
   const LogOutHandler = () => {
     localStorage.removeItem("userInfo");
+    socket.on("disconnect");
     history.push("/");
   };
   return (

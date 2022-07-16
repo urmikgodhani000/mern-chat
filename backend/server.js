@@ -29,10 +29,25 @@ const io = require("socket.io")(server, {
   },
 });
 
+let users = [];
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("connected");
+  });
+
+  socket.on("login", function (userData) {
+    addUser(userData._id, socket.id);
+    io.emit("updateOnlineOrNot", users);
   });
 
   socket.on("join chat", (room) => {
@@ -55,5 +70,12 @@ io.on("connection", (socket) => {
 
       socket.in(user._id).emit("message recieved", newMessageRecive);
     });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("⚠️ Someone disconnected");
+    removeUser(socket.id);
+    io.emit("updateOnlineOrNot", users);
+    // console.log(users);
   });
 });
