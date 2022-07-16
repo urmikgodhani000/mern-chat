@@ -26,7 +26,8 @@ const ENTPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, SelectedChat, setSelectedChat } = ChatState();
+  const { user, SelectedChat, setSelectedChat, notification, setnotification } =
+    ChatState();
   const [message, setMessage] = useState([]);
   const [loading, setloading] = useState(false);
   const [newMessage, setnewMessage] = useState();
@@ -63,7 +64,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         config
       );
 
-      console.log(message);
       setMessage(data);
       setloading(false);
       socket.emit("join chat", SelectedChat._id);
@@ -99,7 +99,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         !selectedChatCompare ||
         selectedChatCompare._id != newMessageReceived.chat._id
       ) {
-        //notification
+        if (!notification.includes(newMessageReceived)) {
+          setnotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessage([...message, newMessageReceived]);
       }
@@ -126,7 +129,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
 
-        console.log(data);
         setnewMessage("");
         socket.emit("new message", data);
         setMessage([...message, data]);

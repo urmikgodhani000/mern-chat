@@ -126,7 +126,6 @@ export const MyChats = ({ fetchAgain }) => {
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
-                  {console.log(chat)}
                   {chat.isGroupChat ? (
                     <></>
                   ) : (
