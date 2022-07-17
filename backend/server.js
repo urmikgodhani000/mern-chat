@@ -6,6 +6,8 @@ const chatRouters = require("./routers/chatRouters");
 const messageRouters = require("./routers/messageRouters");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const { Server, Socket } = require("socket.io");
+const path = require("path");
+
 const app = express();
 
 dotenv.config();
