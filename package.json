@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.0"
+  },
   "scripts": {
     "start": "node backend/server.js",
-    "start:dev": "nodemon backend/server.js"
+    "start:dev": "nodemon backend/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm insall --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Urmik Godhani",
   "license": "ISC",
