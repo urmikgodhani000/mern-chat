@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node backend/server.js",
-    "start:dev": "nodemon backend/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm insall --prefix frontend && npm run build --prefix frontend"
+    "start:dev": "nodemon backend/server.js"
   },
   "author": "Urmik Godhani",
   "license": "ISC",
