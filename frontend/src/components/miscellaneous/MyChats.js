@@ -8,7 +8,7 @@ import ChatLoding from "./ChatLoding";
 import { getSender } from "../config/ChatLogics";
 import GroupChatModal from "../miscellaneous/GroupChatModal";
 import io from "socket.io-client";
-const ENTPOINT = "http://localhost:5000";
+const ENTPOINT = "https://mern-chat-webapp.herokuapp.com/";
 var socket, selectedChatCompare;
 
 export const MyChats = ({ fetchAgain }) => {

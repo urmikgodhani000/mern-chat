@@ -22,7 +22,7 @@ import { Tooltip } from "@chakra-ui/react";
 import io from "socket.io-client";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-const ENTPOINT = "http://localhost:5000";
+const ENTPOINT = "https://mern-chat-webapp.herokuapp.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {

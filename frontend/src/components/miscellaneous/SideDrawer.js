@@ -34,7 +34,7 @@ import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 
 import io from "socket.io-client";
-const ENTPOINT = "http://localhost:5000";
+const ENTPOINT = "https://mern-chat-webapp.herokuapp.com/";
 var socket;
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
